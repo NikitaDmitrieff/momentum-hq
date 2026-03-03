@@ -15,6 +15,24 @@ const DEFAULT_TASKS = [
   { id: 3, text: "Write weekly investor update", done: false },
 ];
 
+// Placeholder weekly stats (realistic founder data)
+const WEEK_BARS = [
+  { day: "M", pct: 100 },
+  { day: "T", pct: 75 },
+  { day: "W", pct: 100 },
+  { day: "T", pct: 50 },
+  { day: "F", pct: 67 },
+  { day: "S", pct: 100 },
+  { day: "S", pct: 33 }, // today — in progress
+];
+
+const STATS = [
+  { label: "Tasks done", value: "18", sub: "this week" },
+  { label: "Deep work", value: "14.5h", sub: "this week" },
+  { label: "Streak", value: "7 days", sub: "current run" },
+  { label: "Reviews", value: "6", sub: "this month" },
+];
+
 export default function DashboardPage() {
   const { user } = useAuth();
   const [tasks, setTasks] = useState(DEFAULT_TASKS);
@@ -47,6 +65,45 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-semibold mt-1">
           Good morning, {user?.name.split(" ")[0]} 👋
         </h1>
+      </div>
+
+      {/* Analytics */}
+      <div className="mb-5">
+        {/* Stat cards */}
+        <div className="grid grid-cols-4 gap-3 mb-3">
+          {STATS.map((s) => (
+            <div
+              key={s.label}
+              className="bg-[#18181b] border border-[#3f3f46] rounded-xl p-4"
+            >
+              <p className="text-[#71717a] text-xs mb-1">{s.label}</p>
+              <p className="text-lg font-semibold leading-none">{s.value}</p>
+              <p className="text-[#52525b] text-[10px] mt-1">{s.sub}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Mini bar chart — weekly task completion */}
+        <div className="bg-[#18181b] border border-[#3f3f46] rounded-xl p-4">
+          <p className="text-xs text-[#71717a] mb-3">Weekly completion</p>
+          <div className="flex items-end gap-1.5 h-10">
+            {WEEK_BARS.map((b, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                <div className="w-full flex items-end" style={{ height: 32 }}>
+                  <div
+                    className={`w-full rounded-sm transition-all ${
+                      i === WEEK_BARS.length - 1
+                        ? "bg-[#7c3aed]/40"
+                        : "bg-[#7c3aed]"
+                    }`}
+                    style={{ height: `${b.pct}%` }}
+                  />
+                </div>
+                <span className="text-[9px] text-[#52525b]">{b.day}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Intention */}

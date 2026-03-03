@@ -25,9 +25,17 @@ const QUESTIONS = [
   },
 ];
 
+// Placeholder past reviews — realistic founder copy
+const PAST_REVIEWS: {
+  date: string;
+  wins: string;
+  tomorrow: string;
+}[] = [];
+
 export default function ReviewPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [saved, setSaved] = useState(false);
+  const [pastReviews, setPastReviews] = useState(PAST_REVIEWS);
 
   function handleChange(id: string, value: string) {
     setAnswers((prev) => ({ ...prev, [id]: value }));
@@ -35,7 +43,19 @@ export default function ReviewPage() {
   }
 
   function handleSave() {
-    // In a real app, persist to DB
+    const wins = answers["wins"]?.trim();
+    const tomorrow = answers["tomorrow"]?.trim();
+    if (wins || tomorrow) {
+      const today = new Date().toLocaleDateString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+      });
+      setPastReviews((prev) => [
+        { date: today, wins: wins || "—", tomorrow: tomorrow || "—" },
+        ...prev,
+      ]);
+    }
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   }
@@ -93,6 +113,64 @@ export default function ReviewPage() {
           <span className="text-[#34d399] text-sm animate-fade-in">
             ✓ Saved
           </span>
+        )}
+      </div>
+
+      {/* Past Reviews */}
+      <div className="mt-12">
+        <h2 className="text-sm font-semibold mb-4">Past reviews</h2>
+
+        {pastReviews.length === 0 ? (
+          /* Empty state */
+          <div className="bg-[#18181b] border border-[#3f3f46] rounded-xl p-8 flex flex-col items-center text-center">
+            <div className="w-10 h-10 rounded-xl bg-[#27272a] flex items-center justify-center mb-3">
+              <svg
+                className="w-5 h-5 text-[#52525b]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                />
+              </svg>
+            </div>
+            <p className="text-sm font-medium mb-1">No past reviews yet</p>
+            <p className="text-[#52525b] text-xs max-w-xs">
+              Complete your first daily review above and it will appear here.
+              Reviews help you spot patterns and track momentum over time.
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3">
+            {pastReviews.map((r, i) => (
+              <div
+                key={i}
+                className="bg-[#18181b] border border-[#3f3f46] rounded-xl p-4"
+              >
+                <p className="text-xs text-[#71717a] mb-2">{r.date}</p>
+                <div className="flex flex-col gap-1.5">
+                  <div>
+                    <span className="text-[10px] text-[#52525b] uppercase tracking-wide">
+                      Wins
+                    </span>
+                    <p className="text-sm text-[#f4f4f5] mt-0.5">{r.wins}</p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-[#52525b] uppercase tracking-wide">
+                      Tomorrow
+                    </span>
+                    <p className="text-sm text-[#f4f4f5] mt-0.5">
+                      {r.tomorrow}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>

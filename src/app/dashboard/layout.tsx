@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: "/dashboard", label: "Today", icon: "📋" },
   { href: "/dashboard/priorities", label: "Priorities", icon: "🎯" },
   { href: "/dashboard/time-blocks", label: "Time Blocks", icon: "⏱️" },
+  { href: "/dashboard/projects", label: "Projects", icon: "📁" },
   { href: "/dashboard/review", label: "Review", icon: "🔍" },
 ];
 
