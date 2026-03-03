@@ -45,7 +45,7 @@ export default function TimeBlocksPage() {
     <div className="px-8 py-8 max-w-2xl mx-auto">
       <div className="mb-8">
         <h1 className="text-2xl font-semibold">Time Blocks</h1>
-        <p className="text-[#71717a] text-sm mt-1">
+        <p className="text-[#52525b] text-sm mt-1">
           Design your day in advance. Protect your deep work.
         </p>
       </div>
@@ -79,8 +79,8 @@ export default function TimeBlocksPage() {
       </div>
 
       {/* Add block form */}
-      <div className="bg-[#18181b] border border-[#3f3f46] rounded-xl p-5">
-        <h2 className="text-sm font-semibold mb-4">Add a block</h2>
+      <div className="bg-[#18181b] border border-[#27272a] rounded-xl p-5 hover:border-[#3f3f46] transition-colors">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-[#52525b] mb-4">Add a block</h2>
         <div className="flex flex-col gap-3">
           <div className="flex gap-3">
             <div className="flex flex-col gap-1">
