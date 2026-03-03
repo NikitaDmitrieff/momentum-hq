@@ -46,20 +46,20 @@ export default function ReviewPage() {
     <div className="px-8 py-8 max-w-2xl mx-auto">
       <div className="mb-8">
         <h1 className="text-2xl font-semibold">Daily Review</h1>
-        <p className="text-[#71717a] text-sm mt-1">
+        <p className="text-[#52525b] text-sm mt-1">
           Close the loop. Reflect, learn, reset.
         </p>
       </div>
 
       {/* Progress */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex-1 h-1 bg-[#27272a] rounded-full">
+        <div className="flex-1 h-0.5 bg-[#27272a] rounded-full">
           <div
-            className="h-1 bg-[#7c3aed] rounded-full transition-all duration-500"
+            className="h-0.5 bg-[#7c3aed] rounded-full transition-all duration-500"
             style={{ width: `${(filled / QUESTIONS.length) * 100}%` }}
           />
         </div>
-        <span className="text-xs text-[#71717a]">
+        <span className="text-xs text-[#52525b]">
           {filled}/{QUESTIONS.length}
         </span>
       </div>
@@ -68,15 +68,17 @@ export default function ReviewPage() {
         {QUESTIONS.map((q) => (
           <div
             key={q.id}
-            className="bg-[#18181b] border border-[#3f3f46] rounded-xl p-5"
+            className="bg-[#18181b] border border-[#27272a] rounded-xl p-5 hover:border-[#3f3f46] transition-colors"
           >
-            <label className="block text-sm font-medium mb-2">{q.label}</label>
+            <label className="block text-xs font-semibold uppercase tracking-widest text-[#52525b] mb-3">
+              {q.label}
+            </label>
             <textarea
               value={answers[q.id] ?? ""}
               onChange={(e) => handleChange(q.id, e.target.value)}
               placeholder={q.placeholder}
               rows={3}
-              className="w-full bg-[#27272a] border border-[#3f3f46] rounded-md px-3 py-2 text-sm text-white placeholder:text-[#52525b] focus:outline-none focus:ring-2 focus:ring-[#7c3aed] resize-none"
+              className="w-full bg-transparent text-sm text-white placeholder:text-[#3f3f46] focus:outline-none resize-none"
             />
           </div>
         ))}

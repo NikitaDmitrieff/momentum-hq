@@ -36,15 +36,16 @@ export default function PrioritiesPage() {
     <div className="px-8 py-8 max-w-2xl mx-auto">
       <div className="mb-8">
         <h1 className="text-2xl font-semibold">Priorities</h1>
-        <p className="text-[#71717a] text-sm mt-1">
+        <p className="text-[#52525b] text-sm mt-1">
           Three big rocks max. What absolutely must move forward today?
         </p>
       </div>
 
-      <div className="bg-[#18181b] border border-[#3f3f46] rounded-xl p-5">
+      <div className="bg-[#18181b] border border-[#27272a] rounded-xl overflow-hidden hover:border-[#3f3f46] transition-colors">
+        <div className="px-5 pt-5 pb-4">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold">Big Rocks</h2>
-          <span className="text-xs text-[#71717a]">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-[#52525b]">Big Rocks</h2>
+          <span className="text-xs text-[#52525b]">
             {rocks.length}/{MAX_ROCKS}
           </span>
         </div>
@@ -94,29 +95,30 @@ export default function PrioritiesPage() {
           )}
         </ul>
 
+        {rocks.length >= MAX_ROCKS && (
+          <p className="text-xs text-[#52525b] text-center pb-1">
+            You&apos;ve hit the limit. Focus on these {MAX_ROCKS} things.
+          </p>
+        )}
+        </div>
+
         {rocks.length < MAX_ROCKS && (
-          <div className="flex gap-2">
+          <div className="border-t border-[#27272a] px-5 py-3 flex gap-2">
             <input
               type="text"
               value={newRock}
               onChange={(e) => setNewRock(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addRock()}
               placeholder="What must move forward today?"
-              className="flex-1 bg-[#27272a] border border-[#3f3f46] rounded-md px-3 py-1.5 text-sm text-white placeholder:text-[#52525b] focus:outline-none focus:ring-2 focus:ring-[#7c3aed]"
+              className="flex-1 bg-transparent text-sm text-white placeholder:text-[#3f3f46] focus:outline-none"
             />
             <button
               onClick={addRock}
-              className="bg-[#27272a] hover:bg-[#3f3f46] border border-[#3f3f46] text-[#a1a1aa] hover:text-white px-3 py-1.5 rounded-md text-sm transition-colors"
+              className="text-[#52525b] hover:text-[#a1a1aa] text-xl leading-none transition-colors px-1"
             >
               +
             </button>
           </div>
-        )}
-
-        {rocks.length >= MAX_ROCKS && (
-          <p className="text-xs text-[#52525b] text-center">
-            You&apos;ve hit the limit. Focus on these {MAX_ROCKS} things.
-          </p>
         )}
       </div>
     </div>
