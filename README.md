@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Momentum HQ
+
+> Personal ops cockpit for founders: daily plan, priorities, time blocks, and review.
+
+## Overview
+
+Momentum HQ is a focused daily operating system designed for founders. It provides a structured workspace to:
+
+- **Plan** your day with a clear intention
+- **Prioritize** up to three big rocks that must move forward
+- **Time-block** your calendar to protect deep work
+- **Review** each day with structured reflection questions
+
+## Tech Stack
+
+- **Next.js 14** (App Router)
+- **TypeScript**
+- **Tailwind CSS**
+- Mock auth via React Context (swap in NextAuth / Clerk as needed)
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── layout.tsx          # Root layout with AuthProvider
+│   ├── page.tsx            # Landing page
+│   ├── globals.css
+│   ├── login/
+│   │   └── page.tsx        # Login page (mock auth)
+│   └── dashboard/
+│       ├── layout.tsx      # Dashboard shell + sidebar nav
+│       ├── page.tsx        # Today's plan + task list
+│       ├── priorities/
+│       │   └── page.tsx    # Big Rocks (max 3)
+│       ├── time-blocks/
+│       │   └── page.tsx    # Daily schedule builder
+│       └── review/
+│           └── page.tsx    # End-of-day reflection
+└── context/
+    └── auth.tsx            # Mock auth context
+```
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Navigate to `/login` and sign in with any credentials (mock auth — no real validation).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Auth
 
-## Learn More
+Auth is currently mocked via a React Context (`src/context/auth.tsx`). Any email/password combination works. The mock user is:
 
-To learn more about Next.js, take a look at the following resources:
+```
+Name:  Alex Founder
+Email: alex@momentum-hq.com
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To add real auth, replace the `AuthProvider` with NextAuth.js or Clerk.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Roadmap
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Persist data to Supabase
+- [ ] Real authentication (Clerk or NextAuth)
+- [ ] Weekly review view
+- [ ] Streak tracking
+- [ ] Calendar sync (Google Calendar)
+- [ ] Mobile-responsive sidebar (drawer)
