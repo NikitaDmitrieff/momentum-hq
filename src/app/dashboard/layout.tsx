@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import OnboardingModal from "@/components/OnboardingModal";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Today", icon: "📋" },
@@ -87,6 +88,8 @@ export default function DashboardLayout({
 
       {/* Main content */}
       <main className="flex-1 overflow-auto">{children}</main>
+
+      <OnboardingModal />
     </div>
   );
 }

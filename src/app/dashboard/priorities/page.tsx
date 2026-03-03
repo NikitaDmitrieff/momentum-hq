@@ -1,16 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useOnboarding } from "@/context/onboarding";
 
 const MAX_ROCKS = 3;
 
-const DEFAULT_ROCKS = [
-  { id: 1, text: "Launch v2 beta to 50 users", done: false },
-  { id: 2, text: "Close seed round term sheet", done: false },
-];
-
 export default function PrioritiesPage() {
-  const [rocks, setRocks] = useState(DEFAULT_ROCKS);
+  const { data: onboardingData } = useOnboarding();
+  const [rocks, setRocks] = useState<{ id: number; text: string; done: boolean }[]>([]);
+
+  useEffect(() => {
+    if (onboardingData) {
+      setRocks(
+        onboardingData.priorities
+          .filter((p) => p.trim() !== "")
+          .map((text, i) => ({ id: i + 1, text, done: false }))
+      );
+    }
+  }, [onboardingData]);
   const [newRock, setNewRock] = useState("");
 
   function toggleRock(id: number) {
