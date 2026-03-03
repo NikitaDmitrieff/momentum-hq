@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/context/auth";
+import { useOnboarding } from "@/context/onboarding";
 import { useState } from "react";
 
 const TODAY = new Date().toLocaleDateString("en-US", {
@@ -15,8 +16,16 @@ const DEFAULT_TASKS = [
   { id: 3, text: "Write weekly investor update", done: false },
 ];
 
+function fmt12(time: string) {
+  const [h, m] = time.split(":").map(Number);
+  const ampm = h >= 12 ? "pm" : "am";
+  const h12 = h % 12 || 12;
+  return `${h12}:${String(m).padStart(2, "0")} ${ampm}`;
+}
+
 export default function DashboardPage() {
   const { user } = useAuth();
+  const { data: onboardingData } = useOnboarding();
   const [tasks, setTasks] = useState(DEFAULT_TASKS);
   const [newTask, setNewTask] = useState("");
   const [intention, setIntention] = useState("");
@@ -43,11 +52,35 @@ export default function DashboardPage() {
     <div className="px-8 py-8 max-w-2xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <p className="text-[#71717a] text-sm">{TODAY}</p>
+        <div className="flex items-center gap-3">
+          <p className="text-[#71717a] text-sm">{TODAY}</p>
+          {onboardingData && (
+            <span className="text-[#52525b] text-xs bg-[#18181b] border border-[#3f3f46] rounded-full px-2.5 py-0.5">
+              {fmt12(onboardingData.dayStart)} – {fmt12(onboardingData.dayEnd)}
+            </span>
+          )}
+        </div>
         <h1 className="text-2xl font-semibold mt-1">
           Good morning, {user?.name.split(" ")[0]} 👋
         </h1>
       </div>
+
+      {/* Big Rocks from onboarding */}
+      {onboardingData && (
+        <div className="bg-[#18181b] border border-[#3f3f46] rounded-xl p-5 mb-5">
+          <h2 className="text-sm font-semibold mb-3">Big Rocks</h2>
+          <ul className="flex flex-col gap-2">
+            {onboardingData.priorities.map((p, i) => (
+              <li key={i} className="flex items-center gap-3">
+                <span className="text-[#52525b] text-xs w-4 text-right flex-shrink-0">
+                  {i + 1}
+                </span>
+                <span className="text-sm text-[#f4f4f5]">{p}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Intention */}
       <div className="bg-[#18181b] border border-[#3f3f46] rounded-xl p-5 mb-5">
